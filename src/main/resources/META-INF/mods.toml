@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+issueTrackerURL="https://github.com/Mrbysco/Sweaters/issues"
+license="MIT"
+
+[[mods]]
+modId="sweaters"
+version="${file.jarVersion}"
+displayName="Sweaters"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/sweaters"
+authors="Mrbysco, ShyNieke"
+description='''
+Deck out your mobs in ugly Christmas sweaters with the Sweaters mod!
+'''
+[[dependencies.sweaters]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18.2,1.19)"
+ordering="NONE"
+side="BOTH"
