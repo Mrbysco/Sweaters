@@ -37,5 +37,4 @@ public class SweaterLayer<T extends LivingEntity, M extends EntityModel<T>> exte
 					partialTicks, 1.0F, 1.0F, 1.0F);
 		}
 	}
-
 }

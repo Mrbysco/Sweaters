@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[40,)"
+loaderVersion="[43,)"
 issueTrackerURL="https://github.com/Mrbysco/Sweaters/issues"
 license="MIT"
 
@@ -15,6 +15,6 @@ Deck out your mobs in ugly Christmas sweaters with the Sweaters mod!
 [[dependencies.sweaters]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.18.2,1.19)"
+versionRange="[1.19.2,1.20)"
 ordering="NONE"
 side="BOTH"

@@ -83,7 +83,7 @@ public class ClientHandler {
 		for (Map.Entry<ResourceLocation, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
 			ResourceLocation entityLocation = entry.getKey();
 			LayerInfo info = entry.getValue();
-			EntityType<?> foundType = ForgeRegistries.ENTITIES.getValue(entityLocation);
+			EntityType<?> foundType = ForgeRegistries.ENTITY_TYPES.getValue(entityLocation);
 			if (foundType != null) {
 				EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) foundType;
 				LivingEntityRenderer<? extends LivingEntity, ? extends EntityModel<? extends LivingEntity>> livingEntityRenderer = event.getRenderer(entityType);
