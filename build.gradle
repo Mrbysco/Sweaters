@@ -120,9 +120,9 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
 
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
-    implementation fg.deobf("com.shynieke.statues:Statues-${mc_version}:${statues_version}")
-
-    implementation fg.deobf("curse.maven:PlayerMobs-430513:4343803")
+//    implementation fg.deobf("com.shynieke.statues:Statues-${mc_version}:${statues_version}")
+//
+//    implementation fg.deobf("curse.maven:PlayerMobs-430513:4343803")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
