@@ -26,13 +26,13 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +83,7 @@ public class ClientHandler {
 		for (Map.Entry<ResourceLocation, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
 			ResourceLocation entityLocation = entry.getKey();
 			LayerInfo info = entry.getValue();
-			EntityType<?> foundType = ForgeRegistries.ENTITY_TYPES.getValue(entityLocation);
+			EntityType<?> foundType = BuiltInRegistries.ENTITY_TYPE.get(entityLocation);
 			if (foundType != null) {
 				EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) foundType;
 				LivingEntityRenderer<? extends LivingEntity, ? extends EntityModel<? extends LivingEntity>> livingEntityRenderer = event.getRenderer(entityType);
