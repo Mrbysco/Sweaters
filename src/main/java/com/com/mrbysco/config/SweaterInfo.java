@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public final class SweaterInfo {
-	private String mobType;
-	private List<ResourceLocation> entities;
-	private List<ResourceLocation> textures;
+	private final String mobType;
+	private final List<ResourceLocation> entities;
+	private final List<ResourceLocation> textures;
 
 	public SweaterInfo(String mobType, List<ResourceLocation> entities, List<ResourceLocation> textures) {
 		this.mobType = mobType;

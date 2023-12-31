@@ -83,7 +83,7 @@ public class ConfigHandler {
 						GSON.toJson(info, writer);
 						writer.flush();
 					} catch (IOException e) {
-						e.printStackTrace();
+						Sweaters.LOGGER.trace("Exception writing to file: ", e);
 					}
 				}
 			}
@@ -105,7 +105,7 @@ public class ConfigHandler {
 						}
 						writer.flush();
 					} catch (IOException e) {
-						e.printStackTrace();
+						Sweaters.LOGGER.trace("Exception writing to file: ", e);
 					}
 				}
 			}
@@ -137,7 +137,7 @@ public class ConfigHandler {
 						}
 					} catch (final Exception e) {
 						Sweaters.LOGGER.error("Unable to load file {}. Please make sure it's a valid json.", fileName);
-						e.printStackTrace();
+						Sweaters.LOGGER.trace("Exception: ", e);
 					}
 				} else {
 					Sweaters.LOGGER.error("Found invalid file {} in the sweaters config folder. It must be a .json file!", fileName);
