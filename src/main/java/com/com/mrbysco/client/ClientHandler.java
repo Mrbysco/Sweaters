@@ -21,6 +21,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
@@ -28,6 +29,7 @@ import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +39,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ClientHandler {
 
@@ -83,83 +86,87 @@ public class ClientHandler {
 		for (Map.Entry<ResourceLocation, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
 			ResourceLocation entityLocation = entry.getKey();
 			LayerInfo info = entry.getValue();
-			EntityType<?> foundType = BuiltInRegistries.ENTITY_TYPE.get(entityLocation);
-			if (foundType != null) {
-				EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) foundType;
-				LivingEntityRenderer<? extends LivingEntity, ? extends EntityModel<? extends LivingEntity>> livingEntityRenderer = event.getRenderer(entityType);
-				MobType type = info.type();
-				switch (type) {
-					case CREEPER -> {
-						if (livingEntityRenderer instanceof CreeperRenderer renderer) {
-							renderer.addLayer(new SweaterLayer(renderer, () -> new CreeperModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
-						} else if (livingEntityRenderer.getModel() instanceof CreeperModel) {
-							livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new CreeperModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+			Optional<EntityType<?>> foundType = BuiltInRegistries.ENTITY_TYPE.getOptional(entityLocation);
+			if(!foundType.isPresent()) {
+				Sweaters.LOGGER.error("Ignoring {} as it doesn't exist", entityLocation);
+			} else {
+				EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) foundType.get();
+				EntityRenderer<? extends Entity> entityRenderer = event.getRenderer(entityType);
+				if (entityRenderer instanceof LivingEntityRenderer<?, ?> livingEntityRenderer) {
+					MobType type = info.type();
+					switch (type) {
+						case CREEPER -> {
+							if (livingEntityRenderer instanceof CreeperRenderer renderer) {
+								renderer.addLayer(new SweaterLayer(renderer, () -> new CreeperModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							} else if (livingEntityRenderer.getModel() instanceof CreeperModel) {
+								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new CreeperModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							}
 						}
-					}
-					case CHICKEN -> {
-						if (livingEntityRenderer instanceof ChickenRenderer renderer) {
-							renderer.addLayer(new SweaterLayer(renderer, () -> new ChickenModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
-						} else if (livingEntityRenderer.getModel() instanceof ChickenModel) {
-							livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new ChickenModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+						case CHICKEN -> {
+							if (livingEntityRenderer instanceof ChickenRenderer renderer) {
+								renderer.addLayer(new SweaterLayer(renderer, () -> new ChickenModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							} else if (livingEntityRenderer.getModel() instanceof ChickenModel) {
+								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new ChickenModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							}
 						}
-					}
-					case SLIME -> {
-						if (livingEntityRenderer instanceof SlimeRenderer renderer) {
-							renderer.addLayer(new SweaterLayer(renderer, () -> new SlimeModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
-						} else if (livingEntityRenderer.getModel() instanceof SlimeModel) {
-							livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new SlimeModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+						case SLIME -> {
+							if (livingEntityRenderer instanceof SlimeRenderer renderer) {
+								renderer.addLayer(new SweaterLayer(renderer, () -> new SlimeModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							} else if (livingEntityRenderer.getModel() instanceof SlimeModel) {
+								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new SlimeModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							}
 						}
-					}
-					case WOLF -> {
-						if (livingEntityRenderer instanceof WolfRenderer renderer) {
-							renderer.addLayer(new SweaterLayer(renderer, () -> new WolfModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
-						} else if (livingEntityRenderer.getModel() instanceof WolfModel) {
-							livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new WolfModel<>(
-									modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+						case WOLF -> {
+							if (livingEntityRenderer instanceof WolfRenderer renderer) {
+								renderer.addLayer(new SweaterLayer(renderer, () -> new WolfModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							} else if (livingEntityRenderer.getModel() instanceof WolfModel) {
+								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new WolfModel<>(
+										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+							}
 						}
-					}
-					case PLAYER -> {
-						if (entityLocation.toString().equals("minecraft:player")) {
-							event.getSkins().forEach(s -> {
-								LivingEntityRenderer<? extends Player, ? extends EntityModel<? extends Player>> playerEntityRenderer = event.getSkin(s);
-								if (playerEntityRenderer instanceof PlayerRenderer playerRenderer) {
-									playerRenderer.addLayer(new PlayerLikeSweaterLayer<>(playerRenderer, modelSet,
-											TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
-								}
-							});
-						} else {
-							if (livingEntityRenderer != null) {
-								if (livingEntityRenderer.getModel() instanceof PlayerModel) {
-									if (livingEntityRenderer.getModel() instanceof PlayerModel) {
-										if (livingEntityRenderer instanceof HumanoidMobRenderer renderer) {
-											renderer.addLayer(new PlayerLikeSweaterLayer<>(renderer, modelSet,
-													TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
-										} else {
-											LivingEntityRenderer<LivingEntity, PlayerModel<LivingEntity>> playerRenderer = (LivingEntityRenderer<LivingEntity, PlayerModel<LivingEntity>>) livingEntityRenderer;
-											playerRenderer.addLayer(new PlayerLikeSweaterLayer<>(playerRenderer, modelSet,
-													TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
-										}
+						case PLAYER -> {
+							if (entityLocation.toString().equals("minecraft:player")) {
+								event.getSkins().forEach(s -> {
+									LivingEntityRenderer<? extends Player, ? extends EntityModel<? extends Player>> playerEntityRenderer = event.getSkin(s);
+									if (playerEntityRenderer instanceof PlayerRenderer playerRenderer) {
+										playerRenderer.addLayer(new PlayerLikeSweaterLayer<>(playerRenderer, modelSet,
+												TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
 									}
-								} else {
-									Sweaters.LOGGER.error("Can't attach sweater layer to {} as it's model isn't an instance of HumanoidModel", entityLocation);
+								});
+							} else {
+								if (livingEntityRenderer != null) {
+									if (livingEntityRenderer.getModel() instanceof PlayerModel) {
+										if (livingEntityRenderer.getModel() instanceof PlayerModel) {
+											if (livingEntityRenderer instanceof HumanoidMobRenderer renderer) {
+												renderer.addLayer(new PlayerLikeSweaterLayer<>(renderer, modelSet,
+														TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
+											} else {
+												LivingEntityRenderer<LivingEntity, PlayerModel<LivingEntity>> playerRenderer = (LivingEntityRenderer<LivingEntity, PlayerModel<LivingEntity>>) livingEntityRenderer;
+												playerRenderer.addLayer(new PlayerLikeSweaterLayer<>(playerRenderer, modelSet,
+														TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
+											}
+										}
+									} else {
+										Sweaters.LOGGER.error("Can't attach sweater layer to {} as it's model isn't an instance of HumanoidModel", entityLocation);
+									}
 								}
 							}
 						}
-					}
-					case HUMANOID, HUMANOID_EXTENDED -> {
-						if (livingEntityRenderer != null) {
-							if (livingEntityRenderer.getModel() instanceof HumanoidModel) {
-								livingEntityRenderer.addLayer(new HumanoidSweaterLayer(livingEntityRenderer, () -> new HumanoidModel<>(
-										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
-							} else {
-								Sweaters.LOGGER.error("Can't attach sweater layer to {} as it's model isn't an instance of HumanoidModel", entityLocation);
+						case HUMANOID, HUMANOID_EXTENDED -> {
+							if (livingEntityRenderer != null) {
+								if (livingEntityRenderer.getModel() instanceof HumanoidModel) {
+									livingEntityRenderer.addLayer(new HumanoidSweaterLayer(livingEntityRenderer, () -> new HumanoidModel<>(
+											modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+								} else {
+									Sweaters.LOGGER.error("Can't attach sweater layer to {} as it's model isn't an instance of HumanoidModel", entityLocation);
+								}
 							}
 						}
 					}

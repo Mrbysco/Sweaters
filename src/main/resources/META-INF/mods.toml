@@ -21,6 +21,6 @@ side="BOTH"
 [[dependencies.sweaters]]
 modId="neoforge"
 type="REQUIRED"
-versionRange="[20.4.60-beta,)"
+versionRange="[20.4.100-beta,)"
 ordering="NONE"
 side="BOTH"
