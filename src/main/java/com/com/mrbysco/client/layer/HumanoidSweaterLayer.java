@@ -27,7 +27,7 @@ public class HumanoidSweaterLayer<T extends LivingEntity, M extends HumanoidMode
 	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		final Random random = new Random(livingEntity.hashCode());
 		if (random.nextBoolean() && !layerLocations.isEmpty()) {
-			ResourceLocation sweaterLocation = layerLocations.get(0);
+			ResourceLocation sweaterLocation = layerLocations.getFirst();
 			if (layerLocations.size() > 1) {
 				sweaterLocation = layerLocations.get(random.nextInt(layerLocations.size()));
 			}

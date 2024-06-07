@@ -87,7 +87,7 @@ public class ClientHandler {
 			ResourceLocation entityLocation = entry.getKey();
 			LayerInfo info = entry.getValue();
 			Optional<EntityType<?>> foundType = BuiltInRegistries.ENTITY_TYPE.getOptional(entityLocation);
-			if(!foundType.isPresent()) {
+			if (!foundType.isPresent()) {
 				Sweaters.LOGGER.error("Ignoring {} as it doesn't exist", entityLocation);
 			} else {
 				EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) foundType.get();

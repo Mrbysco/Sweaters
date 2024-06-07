@@ -21,7 +21,7 @@ public class PlayerLikeSweaterLayer<T extends LivingEntity> extends AbstractSwea
 	private final List<ResourceLocation> slimLayerLocations = new ArrayList<>();
 
 	public PlayerLikeSweaterLayer(RenderLayerParent<T, PlayerModel<T>> layerParent,
-								  EntityModelSet modelSet, List<ResourceLocation> layerLocations, List<ResourceLocation> slimLayerLocations) {
+	                              EntityModelSet modelSet, List<ResourceLocation> layerLocations, List<ResourceLocation> slimLayerLocations) {
 		super(layerParent);
 		this.slimModel = new PlayerModel<>(modelSet.bakeLayer(ClientHandler.PLAYER_SLIM_SWEATER_LAYER), true);
 		this.model = new PlayerModel<>(modelSet.bakeLayer(ClientHandler.PLAYER_SWEATER_LAYER), false);
@@ -38,7 +38,7 @@ public class PlayerLikeSweaterLayer<T extends LivingEntity> extends AbstractSwea
 		if (random.nextBoolean()) {
 			if (this.getParentModel().slim) {
 				if (!slimLayerLocations.isEmpty()) {
-					ResourceLocation sweaterLocation = slimLayerLocations.get(0);
+					ResourceLocation sweaterLocation = slimLayerLocations.getFirst();
 					if (slimLayerLocations.size() > 1) {
 						sweaterLocation = slimLayerLocations.get(random.nextInt(slimLayerLocations.size()));
 					}
@@ -48,7 +48,7 @@ public class PlayerLikeSweaterLayer<T extends LivingEntity> extends AbstractSwea
 				}
 			} else {
 				if (!layerLocations.isEmpty()) {
-					ResourceLocation sweaterLocation = layerLocations.get(0);
+					ResourceLocation sweaterLocation = layerLocations.getFirst();
 					if (layerLocations.size() > 1) {
 						sweaterLocation = layerLocations.get(random.nextInt(layerLocations.size()));
 					}
