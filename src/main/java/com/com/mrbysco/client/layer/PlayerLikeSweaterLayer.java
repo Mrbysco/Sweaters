@@ -44,7 +44,7 @@ public class PlayerLikeSweaterLayer<T extends LivingEntity> extends AbstractSwea
 					}
 					coloredCutoutHumanoidModelCopyLayerRender(this.getParentModel(), this.slimModel, sweaterLocation, poseStack, bufferSource,
 							packedLightIn, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
-							partialTicks, 1.0F, 1.0F, 1.0F);
+							partialTicks, -1);
 				}
 			} else {
 				if (!layerLocations.isEmpty()) {
@@ -54,7 +54,7 @@ public class PlayerLikeSweaterLayer<T extends LivingEntity> extends AbstractSwea
 					}
 					coloredCutoutHumanoidModelCopyLayerRender(this.getParentModel(), this.model, sweaterLocation, poseStack, bufferSource,
 							packedLightIn, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
-							partialTicks, 1.0F, 1.0F, 1.0F);
+							partialTicks, -1);
 				}
 			}
 		}

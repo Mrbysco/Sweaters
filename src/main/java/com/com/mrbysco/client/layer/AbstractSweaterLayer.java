@@ -22,7 +22,7 @@ public abstract class AbstractSweaterLayer<T extends LivingEntity, M extends Ent
 			float limbSwing, float limbSwingAmount,
 			float ageInTicks, float netHeadYaw,
 			float headPitch, float partialTicks,
-			float red, float blue, float green) {
+			int color) {
 
 		if (!livingEntity.isInvisible()) {
 			model.copyPropertiesTo(model2);
@@ -35,7 +35,7 @@ public abstract class AbstractSweaterLayer<T extends LivingEntity, M extends Ent
 			model2.leftArm.copyFrom(model.leftArm);
 			model2.rightLeg.copyFrom(model.rightLeg);
 			model2.leftLeg.copyFrom(model.leftLeg);
-			renderColoredCutoutModel(model2, sweaterLocation, poseStack, bufferSource, packedLightIn, livingEntity, red, blue, green);
+			renderColoredCutoutModel(model2, sweaterLocation, poseStack, bufferSource, packedLightIn, livingEntity, color);
 		}
 	}
 }

@@ -24,39 +24,39 @@ public class ConfigHandler {
 	public static final Map<MobType, SweaterInfo> SWEATER_ENTRIES = new HashMap<>();
 
 	public static final List<ResourceLocation> HUMANOID_ENTITIES = List.of(
-			new ResourceLocation("zombie"),
-			new ResourceLocation("husk"),
-			new ResourceLocation("skeleton"),
-			new ResourceLocation("wither_skeleton"),
-			new ResourceLocation("stray"),
-			new ResourceLocation("husk"),
-			new ResourceLocation("piglin"),
-			new ResourceLocation("piglin_brute"),
-			new ResourceLocation("zombified_piglin")
+			ResourceLocation.withDefaultNamespace("zombie"),
+			ResourceLocation.withDefaultNamespace("husk"),
+			ResourceLocation.withDefaultNamespace("skeleton"),
+			ResourceLocation.withDefaultNamespace("wither_skeleton"),
+			ResourceLocation.withDefaultNamespace("stray"),
+			ResourceLocation.withDefaultNamespace("husk"),
+			ResourceLocation.withDefaultNamespace("piglin"),
+			ResourceLocation.withDefaultNamespace("piglin_brute"),
+			ResourceLocation.withDefaultNamespace("zombified_piglin")
 	);
 
 	public static final List<ResourceLocation> PLAYER_ENTITIES = List.of(
-			new ResourceLocation("player"),
-			new ResourceLocation("player_mobs", "player_mob"),
-			new ResourceLocation("statues", "player_statue")
+			ResourceLocation.withDefaultNamespace("player"),
+			ResourceLocation.fromNamespaceAndPath("player_mobs", "player_mob"),
+			ResourceLocation.fromNamespaceAndPath("statues", "player_statue")
 	);
 
 	public static final List<ResourceLocation> HUMANOID_EXTENDED_ENTITIES = List.of(
-			new ResourceLocation("drowned")
+			ResourceLocation.withDefaultNamespace("drowned")
 	);
 	public static final List<ResourceLocation> CREEPER_ENTITIES = List.of(
-			new ResourceLocation("creeper")
+			ResourceLocation.withDefaultNamespace("creeper")
 	);
 	public static final List<ResourceLocation> CHICKEN_ENTITIES = List.of(
-			new ResourceLocation("chicken")/*,
-			new ResourceLocation("turkeydevutil", "turkey")*/
+			ResourceLocation.withDefaultNamespace("chicken")/*,
+			ResourceLocation.withDefaultNamespace("turkeydevutil", "turkey")*/
 	);
 	public static final List<ResourceLocation> SLIME_ENTITIES = List.of(
-			new ResourceLocation("slime"),
-			new ResourceLocation("magma_cube")
+			ResourceLocation.withDefaultNamespace("slime"),
+			ResourceLocation.withDefaultNamespace("magma_cube")
 	);
 	public static final List<ResourceLocation> WOLF_ENTITIES = List.of(
-			new ResourceLocation("wolf")
+			ResourceLocation.withDefaultNamespace("wolf")
 	);
 
 	public static void initializeConfig() {

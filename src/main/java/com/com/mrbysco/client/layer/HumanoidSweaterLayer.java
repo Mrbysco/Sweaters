@@ -33,7 +33,7 @@ public class HumanoidSweaterLayer<T extends LivingEntity, M extends HumanoidMode
 			}
 			coloredCutoutHumanoidModelCopyLayerRender(this.getParentModel(), this.model, sweaterLocation, poseStack, bufferSource,
 					packedLightIn, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
-					partialTicks, 1.0F, 1.0F, 1.0F);
+					partialTicks, -1);
 		}
 	}
 }

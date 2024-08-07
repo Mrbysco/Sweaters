@@ -2,6 +2,7 @@ package com.com.mrbysco;
 
 import com.com.mrbysco.client.ClientHandler;
 import com.mojang.logging.LogUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -18,5 +19,9 @@ public class Sweaters {
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerAdditionalLayers);
 		}
+	}
+
+	public static ResourceLocation modLoc(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
 }

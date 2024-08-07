@@ -43,14 +43,14 @@ import java.util.Optional;
 
 public class ClientHandler {
 
-	public static final ModelLayerLocation PLAYER_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "player"), "sweater");
-	public static final ModelLayerLocation PLAYER_SLIM_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "player_slim"), "sweater");
-	public static final ModelLayerLocation HUMANOID_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "humanoid"), "sweater");
-	public static final ModelLayerLocation HUMANOID_EXTENDED_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "humanoid_extended"), "sweater");
-	public static final ModelLayerLocation CREEPER_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "creeper"), "sweater");
-	public static final ModelLayerLocation CHICKEN_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "chicken"), "sweater");
-	public static final ModelLayerLocation SLIME_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "slime"), "sweater");
-	public static final ModelLayerLocation WOLF_SWEATER_LAYER = new ModelLayerLocation(new ResourceLocation(Sweaters.MOD_ID, "wolf"), "sweater");
+	public static final ModelLayerLocation PLAYER_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("player"), "sweater");
+	public static final ModelLayerLocation PLAYER_SLIM_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("player_slim"), "sweater");
+	public static final ModelLayerLocation HUMANOID_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("humanoid"), "sweater");
+	public static final ModelLayerLocation HUMANOID_EXTENDED_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("humanoid_extended"), "sweater");
+	public static final ModelLayerLocation CREEPER_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("creeper"), "sweater");
+	public static final ModelLayerLocation CHICKEN_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("chicken"), "sweater");
+	public static final ModelLayerLocation SLIME_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("slime"), "sweater");
+	public static final ModelLayerLocation WOLF_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("wolf"), "sweater");
 
 	public static void onClientSetup(final FMLClientSetupEvent event) {
 		ConfigHandler.initializeConfig();
