@@ -87,6 +87,10 @@ public class ClientHandler {
 			if (foundType != null) {
 				EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) foundType;
 				LivingEntityRenderer<? extends LivingEntity, ? extends EntityModel<? extends LivingEntity>> livingEntityRenderer = event.getRenderer(entityType);
+				if (livingEntityRenderer == null) {
+					Sweaters.LOGGER.error("Can't attach sweater layer to {} as it's renderer is null", entityLocation);
+					continue;
+				}
 				MobType type = info.type();
 				switch (type) {
 					case CREEPER -> {
