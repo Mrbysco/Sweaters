@@ -11,7 +11,7 @@ bringing a touch of holiday cheer to your Minecraft world. So why wait? Install 
 
 ## License ##
 * Sweaters' is licensed under the MIT License
-  - (c) 2022 Mrbysco
+  - (c) 2025 Mrbysco
   - [![License](https://img.shields.io/badge/License-MIT-red.svg?style=flat)](http://opensource.org/licenses/MIT)
 
 ## Downloads ##
