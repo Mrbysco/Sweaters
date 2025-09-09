@@ -8,17 +8,16 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
 
-@Mod(Sweaters.MOD_ID)
+@Mod(value = Sweaters.MOD_ID, dist = Dist.CLIENT)
 public class Sweaters {
 	public static final String MOD_ID = "sweaters";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public Sweaters(IEventBus eventBus, Dist dist) {
-		if (dist.isClient()) {
-			eventBus.addListener(ClientHandler::onClientSetup);
-			eventBus.addListener(ClientHandler::registerLayerDefinitions);
-			eventBus.addListener(ClientHandler::registerAdditionalLayers);
-		}
+	public Sweaters(IEventBus eventBus) {
+		eventBus.addListener(ClientHandler::onClientSetup);
+		eventBus.addListener(ClientHandler::registerCustomRenderData);
+		eventBus.addListener(ClientHandler::registerLayerDefinitions);
+		eventBus.addListener(ClientHandler::registerAdditionalLayers);
 	}
 
 	public static ResourceLocation modLoc(String path) {

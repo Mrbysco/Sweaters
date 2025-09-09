@@ -6,28 +6,26 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 
-public abstract class AbstractSweaterLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-	public AbstractSweaterLayer(RenderLayerParent<T, M> renderLayerParent) {
+public abstract class AbstractSweaterLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends RenderLayer<S, M> {
+	public AbstractSweaterLayer(RenderLayerParent<S, M> renderLayerParent) {
 		super(renderLayerParent);
 	}
 
-	protected static <T extends LivingEntity> void coloredCutoutHumanoidModelCopyLayerRender(
-			HumanoidModel<T> model, HumanoidModel<T> model2,
+	protected static <S extends HumanoidRenderState> void coloredCutoutHumanoidModelCopyLayerRender(
+			HumanoidModel<S> model, HumanoidModel<S> model2,
 			ResourceLocation sweaterLocation, PoseStack poseStack,
 			MultiBufferSource bufferSource,
-			int packedLightIn, T livingEntity,
-			float limbSwing, float limbSwingAmount,
-			float ageInTicks, float netHeadYaw,
-			float headPitch, float partialTicks,
-			int color) {
+			int packedLightIn, S renderState,
+			int color
+	) {
 
-		if (!livingEntity.isInvisible()) {
+		if (!renderState.isInvisible) {
 			model.copyPropertiesTo(model2);
-			model2.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
-			model2.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			model2.setupAnim(renderState);
 			model2.head.copyFrom(model.head);
 			model2.hat.copyFrom(model.hat);
 			model2.body.copyFrom(model.body);
@@ -35,7 +33,7 @@ public abstract class AbstractSweaterLayer<T extends LivingEntity, M extends Ent
 			model2.leftArm.copyFrom(model.leftArm);
 			model2.rightLeg.copyFrom(model.rightLeg);
 			model2.leftLeg.copyFrom(model.leftLeg);
-			renderColoredCutoutModel(model2, sweaterLocation, poseStack, bufferSource, packedLightIn, livingEntity, color);
+			renderColoredCutoutModel(model2, sweaterLocation, poseStack, bufferSource, packedLightIn, renderState, color);
 		}
 	}
 }
