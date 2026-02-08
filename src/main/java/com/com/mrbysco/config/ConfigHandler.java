@@ -5,7 +5,7 @@ import com.com.mrbysco.client.ClientHandler;
 import com.com.mrbysco.client.helper.TextureHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
@@ -23,40 +23,40 @@ public class ConfigHandler {
 
 	public static final Map<MobType, SweaterInfo> SWEATER_ENTRIES = new HashMap<>();
 
-	public static final List<ResourceLocation> HUMANOID_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("zombie"),
-			ResourceLocation.withDefaultNamespace("husk"),
-			ResourceLocation.withDefaultNamespace("skeleton"),
-			ResourceLocation.withDefaultNamespace("wither_skeleton"),
-			ResourceLocation.withDefaultNamespace("stray"),
-			ResourceLocation.withDefaultNamespace("husk"),
-			ResourceLocation.withDefaultNamespace("piglin"),
-			ResourceLocation.withDefaultNamespace("piglin_brute"),
-			ResourceLocation.withDefaultNamespace("zombified_piglin")
+	public static final List<Identifier> HUMANOID_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("zombie"),
+			Identifier.withDefaultNamespace("husk"),
+			Identifier.withDefaultNamespace("skeleton"),
+			Identifier.withDefaultNamespace("wither_skeleton"),
+			Identifier.withDefaultNamespace("stray"),
+			Identifier.withDefaultNamespace("husk"),
+			Identifier.withDefaultNamespace("piglin"),
+			Identifier.withDefaultNamespace("piglin_brute"),
+			Identifier.withDefaultNamespace("zombified_piglin")
 	);
 
-	public static final List<ResourceLocation> PLAYER_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("player"),
-			ResourceLocation.fromNamespaceAndPath("player_mobs", "player_mob"),
-			ResourceLocation.fromNamespaceAndPath("statues", "player_statue")
+	public static final List<Identifier> PLAYER_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("player"),
+			Identifier.fromNamespaceAndPath("player_mobs", "player_mob"),
+			Identifier.fromNamespaceAndPath("statues", "player_statue")
 	);
 
-	public static final List<ResourceLocation> HUMANOID_EXTENDED_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("drowned")
+	public static final List<Identifier> HUMANOID_EXTENDED_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("drowned")
 	);
-	public static final List<ResourceLocation> CREEPER_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("creeper")
+	public static final List<Identifier> CREEPER_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("creeper")
 	);
-	public static final List<ResourceLocation> CHICKEN_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("chicken")/*,
-			ResourceLocation.withDefaultNamespace("turkeydevutil", "turkey")*/
+	public static final List<Identifier> CHICKEN_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("chicken")/*,
+			Identifier.withDefaultNamespace("turkeydevutil", "turkey")*/
 	);
-	public static final List<ResourceLocation> SLIME_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("slime"),
-			ResourceLocation.withDefaultNamespace("magma_cube")
+	public static final List<Identifier> SLIME_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("slime"),
+			Identifier.withDefaultNamespace("magma_cube")
 	);
-	public static final List<ResourceLocation> WOLF_ENTITIES = List.of(
-			ResourceLocation.withDefaultNamespace("wolf")
+	public static final List<Identifier> WOLF_ENTITIES = List.of(
+			Identifier.withDefaultNamespace("wolf")
 	);
 
 	public static void initializeConfig() {
@@ -149,7 +149,7 @@ public class ConfigHandler {
 			MobType mobType = entry.getKey();
 			SweaterInfo info = entry.getValue();
 			if (mobType != null) {
-				for (ResourceLocation entityLocation : info.entities()) {
+				for (Identifier entityLocation : info.entities()) {
 					if (!ClientHandler.LAYER_LOCATION_MAP.containsKey(entityLocation)) {
 						ClientHandler.LAYER_LOCATION_MAP.put(entityLocation,
 								new ClientHandler.LayerInfo(mobType, info.textures()));

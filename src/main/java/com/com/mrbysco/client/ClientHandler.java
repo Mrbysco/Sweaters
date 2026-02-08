@@ -9,16 +9,16 @@ import com.com.mrbysco.client.layer.SweaterLayer;
 import com.com.mrbysco.config.ConfigHandler;
 import com.com.mrbysco.config.MobType;
 import com.google.common.reflect.TypeToken;
-import net.minecraft.client.model.ChickenModel;
-import net.minecraft.client.model.CreeperModel;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.WolfModel;
+import net.minecraft.client.model.animal.chicken.ChickenModel;
+import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.monster.creeper.CreeperModel;
+import net.minecraft.client.model.monster.slime.SlimeModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -26,11 +26,10 @@ import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.client.renderer.entity.WolfRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -82,12 +81,14 @@ public class ClientHandler {
 		event.registerLayerDefinition(ClientHandler.WOLF_SWEATER_LAYER, () ->
 				ModelHelper.createWolfSweater(new CubeDeformation(0.25F)));
 	}
-	public static final ContextKey<Random> SWEATER_RANDOM = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(Sweaters.MOD_ID, "sweater_random"));
+
+	public static final ContextKey<Random> SWEATER_RANDOM = new ContextKey<>(Identifier.fromNamespaceAndPath(Sweaters.MOD_ID, "sweater_random"));
 
 	public static void registerCustomRenderData(RegisterRenderStateModifiersEvent event) {
-		event.registerEntityModifier(new TypeToken<LivingEntityRenderer<? extends LivingEntity, LivingEntityRenderState, ?>>() {}, (entity, renderState) -> {
-			ResourceLocation entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
-			for (Map.Entry<ResourceLocation, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
+		event.registerEntityModifier(new TypeToken<LivingEntityRenderer<? extends LivingEntity, LivingEntityRenderState, ?>>() {
+		}, (entity, renderState) -> {
+			Identifier entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+			for (Map.Entry<Identifier, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
 				if (entry.getKey().equals(entityLocation)) {
 					renderState.setRenderData(SWEATER_RANDOM, new Random(entity.hashCode()));
 					break;
@@ -96,13 +97,13 @@ public class ClientHandler {
 		});
 	}
 
-	public static final Map<ResourceLocation, LayerInfo> LAYER_LOCATION_MAP = new HashMap<>();
+	public static final Map<Identifier, LayerInfo> LAYER_LOCATION_MAP = new HashMap<>();
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static void registerAdditionalLayers(EntityRenderersEvent.AddLayers event) {
 		final EntityModelSet modelSet = event.getEntityModels();
-		for (Map.Entry<ResourceLocation, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
-			ResourceLocation entityLocation = entry.getKey();
+		for (Map.Entry<Identifier, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
+			Identifier entityLocation = entry.getKey();
 			LayerInfo info = entry.getValue();
 			Optional<EntityType<?>> foundType = BuiltInRegistries.ENTITY_TYPE.getOptional(entityLocation);
 			if (foundType.isEmpty()) {
@@ -152,9 +153,9 @@ public class ClientHandler {
 						case PLAYER -> {
 							if (entityLocation.toString().equals("minecraft:player")) {
 								event.getSkins().forEach(s -> {
-									EntityRenderer<? extends Player, ?> playerEntityRenderer = event.getSkin(s);
-									if (playerEntityRenderer instanceof PlayerRenderer playerRenderer) {
-										playerRenderer.addLayer(new PlayerLikeSweaterLayer(playerRenderer, modelSet,
+									EntityRenderer<? extends Player, ?> playerEntityRenderer = event.getPlayerRenderer(s);
+									if (playerEntityRenderer instanceof AvatarRenderer avatarRenderer) {
+										avatarRenderer.addLayer(new PlayerLikeSweaterLayer(avatarRenderer, modelSet,
 												TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
 									}
 								});
@@ -164,10 +165,8 @@ public class ClientHandler {
 										if (livingEntityRenderer instanceof HumanoidMobRenderer renderer) {
 											renderer.addLayer(new PlayerLikeSweaterLayer(renderer, modelSet,
 													TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
-										} else {
-											LivingEntityRenderer<?, ? extends PlayerRenderState, ? extends HumanoidModel<? extends PlayerRenderState>> playerRenderer =
-													(LivingEntityRenderer<?, ? extends PlayerRenderState, ? extends HumanoidModel<? extends PlayerRenderState>>) livingEntityRenderer;
-											playerRenderer.addLayer(new PlayerLikeSweaterLayer(playerRenderer, modelSet,
+										} else if (livingEntityRenderer instanceof AvatarRenderer avatarRenderer) {
+											avatarRenderer.addLayer(new PlayerLikeSweaterLayer(avatarRenderer, modelSet,
 													TextureHelper.HUMANOID_SWEATER_TEXTURES, TextureHelper.SLIM_SWEATER_TEXTURES));
 										}
 									} else {
@@ -192,7 +191,7 @@ public class ClientHandler {
 		}
 	}
 
-	public record LayerInfo(MobType type, List<ResourceLocation> textures) {
+	public record LayerInfo(MobType type, List<Identifier> textures) {
 
 	}
 }

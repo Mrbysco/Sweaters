@@ -1,16 +1,16 @@
 package com.com.mrbysco.config;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.Objects;
 
 public final class SweaterInfo {
 	private final String mobType;
-	private final List<ResourceLocation> entities;
-	private final List<ResourceLocation> textures;
+	private final List<Identifier> entities;
+	private final List<Identifier> textures;
 
-	public SweaterInfo(String mobType, List<ResourceLocation> entities, List<ResourceLocation> textures) {
+	public SweaterInfo(String mobType, List<Identifier> entities, List<Identifier> textures) {
 		this.mobType = mobType;
 		this.entities = entities;
 		this.textures = textures;
@@ -20,11 +20,11 @@ public final class SweaterInfo {
 		return mobType;
 	}
 
-	public List<ResourceLocation> entities() {
+	public List<Identifier> entities() {
 		return entities;
 	}
 
-	public List<ResourceLocation> textures() {
+	public List<Identifier> textures() {
 		return textures;
 	}
 
