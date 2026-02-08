@@ -43,6 +43,7 @@ public class PlayerLikeSweaterLayer<M extends PlayerModel> extends AbstractSweat
 					if (slimLayerLocations.size() > 1) {
 						sweaterLocation = slimLayerLocations.get(random.nextInt(slimLayerLocations.size()));
 					}
+					this.model.setupAnim(renderState);
 					coloredCutoutModelCopyLayerRender(this.model, sweaterLocation, poseStack, nodeCollector,
 							packedLight, renderState, -1, renderState.outlineColor);
 				}
@@ -52,6 +53,7 @@ public class PlayerLikeSweaterLayer<M extends PlayerModel> extends AbstractSweat
 					if (layerLocations.size() > 1) {
 						sweaterLocation = layerLocations.get(random.nextInt(layerLocations.size()));
 					}
+					this.model.setupAnim(renderState);
 					coloredCutoutModelCopyLayerRender(this.model, sweaterLocation, poseStack, nodeCollector,
 							packedLight, renderState, -1, renderState.outlineColor);
 				}

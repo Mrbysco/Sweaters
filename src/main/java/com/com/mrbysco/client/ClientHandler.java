@@ -178,8 +178,8 @@ public class ClientHandler {
 						case HUMANOID, HUMANOID_EXTENDED -> {
 							if (livingEntityRenderer != null) {
 								if (livingEntityRenderer.getModel() instanceof HumanoidModel) {
-									livingEntityRenderer.addLayer(new HumanoidSweaterLayer(livingEntityRenderer, () -> new HumanoidModel<>(
-											modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
+									livingEntityRenderer.addLayer(new HumanoidSweaterLayer(livingEntityRenderer,
+											livingEntityRenderer::getModel, info.textures()));
 								} else {
 									Sweaters.LOGGER.error("Can't attach sweater layer to humanoid {} as it's model isn't an instance of HumanoidModel", entityLocation);
 								}

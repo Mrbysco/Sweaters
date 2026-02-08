@@ -38,6 +38,7 @@ public class SweaterLayer<S extends LivingEntityRenderState, M extends EntityMod
 				poseStack.scale(0.6125F, 0.6125F, 0.6125F);
 				poseStack.translate(0, 1.0625F, 0);
 			}
+			this.model.setupAnim(renderState);
 			coloredCutoutModelCopyLayerRender(this.model, sweaterLocation, poseStack, nodeCollector,
 					packedLight, renderState, -1, renderState.outlineColor);
 		}

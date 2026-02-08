@@ -33,6 +33,7 @@ public class HumanoidSweaterLayer<T extends HumanoidRenderState, M extends Human
 			if (layerLocations.size() > 1) {
 				sweaterLocation = layerLocations.get(random.nextInt(layerLocations.size()));
 			}
+			this.model.setupAnim(renderState);
 			coloredCutoutModelCopyLayerRender(this.model, sweaterLocation, poseStack, nodeCollector,
 					packedLight, renderState, -1, renderState.outlineColor);
 		}
