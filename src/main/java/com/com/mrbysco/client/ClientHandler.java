@@ -10,7 +10,9 @@ import com.com.mrbysco.config.ConfigHandler;
 import com.com.mrbysco.config.MobType;
 import com.google.common.reflect.TypeToken;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.animal.chicken.AdultChickenModel;
 import net.minecraft.client.model.animal.chicken.ChickenModel;
+import net.minecraft.client.model.animal.wolf.AdultWolfModel;
 import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -34,6 +36,9 @@ import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
@@ -44,6 +49,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+@EventBusSubscriber(Dist.CLIENT)
 public class ClientHandler {
 
 	public static final ModelLayerLocation PLAYER_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("player"), "sweater");
@@ -55,10 +61,12 @@ public class ClientHandler {
 	public static final ModelLayerLocation SLIME_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("slime"), "sweater");
 	public static final ModelLayerLocation WOLF_SWEATER_LAYER = new ModelLayerLocation(Sweaters.modLoc("wolf"), "sweater");
 
+	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
 		ConfigHandler.initializeConfig();
 	}
 
+	@SubscribeEvent
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ClientHandler.PLAYER_SWEATER_LAYER, () ->
 				LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.25F), 64, 64));
@@ -84,6 +92,7 @@ public class ClientHandler {
 
 	public static final ContextKey<Random> SWEATER_RANDOM = new ContextKey<>(Identifier.fromNamespaceAndPath(Sweaters.MOD_ID, "sweater_random"));
 
+	@SubscribeEvent
 	public static void registerCustomRenderData(RegisterRenderStateModifiersEvent event) {
 		event.registerEntityModifier(new TypeToken<LivingEntityRenderer<? extends LivingEntity, LivingEntityRenderState, ?>>() {
 		}, (entity, renderState) -> {
@@ -100,6 +109,7 @@ public class ClientHandler {
 	public static final Map<Identifier, LayerInfo> LAYER_LOCATION_MAP = new HashMap<>();
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SubscribeEvent
 	public static void registerAdditionalLayers(EntityRenderersEvent.AddLayers event) {
 		final EntityModelSet modelSet = event.getEntityModels();
 		for (Map.Entry<Identifier, LayerInfo> entry : LAYER_LOCATION_MAP.entrySet()) {
@@ -125,10 +135,10 @@ public class ClientHandler {
 						}
 						case CHICKEN -> {
 							if (livingEntityRenderer instanceof ChickenRenderer renderer) {
-								renderer.addLayer(new SweaterLayer(renderer, () -> new ChickenModel(
+								renderer.addLayer(new SweaterLayer(renderer, () -> new AdultChickenModel(
 										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
 							} else if (livingEntityRenderer.getModel() instanceof ChickenModel) {
-								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new ChickenModel(
+								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new AdultChickenModel(
 										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
 							}
 						}
@@ -143,10 +153,10 @@ public class ClientHandler {
 						}
 						case WOLF -> {
 							if (livingEntityRenderer instanceof WolfRenderer renderer) {
-								renderer.addLayer(new SweaterLayer<>(renderer, () -> new WolfModel(
+								renderer.addLayer(new SweaterLayer<>(renderer, () -> new AdultWolfModel(
 										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
 							} else if (livingEntityRenderer.getModel() instanceof WolfModel) {
-								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new WolfModel(
+								livingEntityRenderer.addLayer(new SweaterLayer(livingEntityRenderer, () -> new AdultWolfModel(
 										modelSet.bakeLayer(type.getModelLayerLocation())), info.textures()));
 							}
 						}
